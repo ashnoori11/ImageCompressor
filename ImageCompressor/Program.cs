@@ -89,7 +89,7 @@ while (doContinue != "no")
 
     num = 0;
 
-    if (withErrors.Count() > 0)
+    if (withErrors.Any())
     {
         Console.BackgroundColor = ConsoleColor.Red;
         Console.ForegroundColor = ConsoleColor.White;
