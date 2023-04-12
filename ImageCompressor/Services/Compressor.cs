@@ -1,6 +1,6 @@
 ﻿namespace ImageCompressor.Services;
 
-public sealed class Compressor : IDisposable
+public sealed class Compressor
 {
     #region methods
     public void ProcessImage(Action<Compressor> options)
@@ -69,26 +69,5 @@ public sealed class Compressor : IDisposable
     public int Height { get; set; } = 0;
     public int Quality { get; set; }
     public string NewPath { get; set; } = string.Empty;
-    #endregion
-
-    #region dispose
-    private bool disposedValue;
-    private void Dispose(bool disposing)
-    {
-        if (!disposedValue)
-        {
-            if (disposing)
-            {
-            }
-
-            this.disposedValue = true;
-        }
-    }
-
-    public void Dispose()
-    {
-        Dispose(disposing: true);
-        GC.SuppressFinalize(this);
-    }
     #endregion
 }

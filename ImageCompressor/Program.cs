@@ -4,7 +4,7 @@ Console.WriteLine("  1- current folder path ");
 Console.WriteLine("  2- your target folder path ");
 Console.WriteLine("  3- pick a number from 30 to 100 for quality of your images");
 
-using Compressor cmp = new();
+Compressor cmp = new();
 string? doContinue = string.Empty;
 List<string> withErrors = new();
 
@@ -64,7 +64,7 @@ while (doContinue != "no")
             Console.WriteLine("  Creation: {0}", imageFiles[num].CreationTime);
             Console.WriteLine("  Attributes: {0}", imageFiles[num].Attributes);
 
-            cmp.ProccessImage(options =>
+            cmp.ProcessImage(options =>
             {
                 options.Path = imageFiles[num].DirectoryName ?? string.Empty;
                 options.ImageName = imageFiles[num].Name;
