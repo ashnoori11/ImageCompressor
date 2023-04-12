@@ -1,15 +1,15 @@
-﻿Console.WriteLine("  hello and welcom to image compressor");
+﻿Console.WriteLine("  hello and welcome to image compressor");
 Console.WriteLine("  we need three things : ");
 Console.WriteLine("  1- current folder path ");
 Console.WriteLine("  2- your target folder path ");
 Console.WriteLine("  3- pick a number from 30 to 100 for quality of your images");
 
-using Compresser cmp = new();
+using Compressor cmp = new();
 string? doContinue = string.Empty;
-List<string> withErros = new();
+List<string> withErrors = new();
 
 string? currentPath = string.Empty;
-string? targetpath = null;
+string? targetPath = null;
 int width = 0;
 int height = 0;
 int quality = 30;
@@ -17,19 +17,19 @@ int num = 0;
 
 while (doContinue != "no")
 {
-    withErros.Clear();
+    withErrors.Clear();
     doContinue = string.Empty;
     currentPath = string.Empty;
-    targetpath = null;
+    targetPath = null;
     width = 0;
     height = 0;
     quality = 30;
 
-    Console.WriteLine("  pls enter the path of your folder (the directory wich contains your images) : ");
+    Console.WriteLine("  pls enter the path of your folder (the directory which contains your images) : ");
     currentPath = Console.ReadLine();
 
-    Console.WriteLine("  pls enter the path of where you want to save your images after proccess (If you don't have a folder for this purpose, don't worry and press 'enter') : ");
-    targetpath = Console.ReadLine();
+    Console.WriteLine("  pls enter the path of where you want to save your images after process (If you don't have a folder for this purpose, don't worry and press 'enter') : ");
+    targetPath = Console.ReadLine();
 
     Console.WriteLine("  pls enter a number from 10 to 100 . This number represents the quality you want your image to have (The image quality starts from 100, which means high quality, and continues to 10, which means the lowest quality) : ");
     int.TryParse(Console.ReadLine(), System.Globalization.NumberStyles.Number, null, out quality);
@@ -71,7 +71,7 @@ while (doContinue != "no")
                 options.Width = width;
                 options.Height = height;
                 options.Quality = quality;
-                options.NewPath = targetpath ?? string.Empty;
+                options.NewPath = targetPath ?? string.Empty;
             });
 
             Console.WriteLine("/---------------------------------------------------/");
@@ -79,7 +79,7 @@ while (doContinue != "no")
         }
         catch (Exception exp)
         {
-            withErros.Add($"{imageFiles[num].Name} - Error Message : {exp.Message}");
+            withErrors.Add($"{imageFiles[num].Name} - Error Message : {exp.Message}");
             num++;
             continue;
         }
@@ -89,11 +89,11 @@ while (doContinue != "no")
 
     num = 0;
 
-    if (withErros.Count() > 0)
+    if (withErrors.Count() > 0)
     {
         Console.BackgroundColor = ConsoleColor.Red;
         Console.ForegroundColor = ConsoleColor.White;
-        foreach (var item in withErros)
+        foreach (var item in withErrors)
         {
             Console.WriteLine(item);
         }

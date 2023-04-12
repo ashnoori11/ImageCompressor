@@ -1,13 +1,13 @@
 ﻿namespace ImageCompressor.Services;
 
-public sealed class Compresser : IDisposable
+public sealed class Compressor : IDisposable
 {
     #region methods
-    public void ProccessImage(Action<Compresser> options)
+    public void ProccessImage(Action<Compressor> options)
     {
         ArgumentNullException.ThrowIfNull(options, $"{nameof(options)} can not be null or empty");
 
-        Compresser myInstance = new Compresser();
+        Compressor myInstance = new Compressor();
         options(myInstance);
 
         if (string.IsNullOrEmpty(myInstance.Path))
