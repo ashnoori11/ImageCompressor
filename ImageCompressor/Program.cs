@@ -12,7 +12,7 @@ string? currentPath = string.Empty;
 string? targetPath = null;
 int width = 0;
 int height = 0;
-int quality = 30;
+byte quality = 30;
 int num = 0;
 
 while (doContinue != "no")
@@ -32,7 +32,7 @@ while (doContinue != "no")
     targetPath = Console.ReadLine();
 
     Console.WriteLine("  pls enter a number from 10 to 100 . This number represents the quality you want your image to have (The image quality starts from 100, which means high quality, and continues to 10, which means the lowest quality) : ");
-    int.TryParse(Console.ReadLine(), System.Globalization.NumberStyles.Number, null, out quality);
+    byte.TryParse(Console.ReadLine(), System.Globalization.NumberStyles.Number, null, out quality);
 
     Console.WriteLine("  pls enter the width of your image :");
     int.TryParse(Console.ReadLine(), System.Globalization.NumberStyles.Number, null, out width);
@@ -46,7 +46,7 @@ while (doContinue != "no")
         continue;
     }
 
-    DirectoryInfo dir = new DirectoryInfo(currentPath);
+    DirectoryInfo dir = new(currentPath);
     FileInfo[] imageFiles = dir.GetFiles("*.jpg");
 
     Console.ForegroundColor = ConsoleColor.Red;

@@ -2,13 +2,12 @@
 
 public sealed class Compressor
 {
-    private byte quality;
     #region methods
     public void ProcessImage(Action<Compressor> options)
     {
         ArgumentNullException.ThrowIfNull(options, nameof(options));
 
-        Compressor myInstance = new Compressor();
+        Compressor myInstance = new();
         options(myInstance);
 
         if (string.IsNullOrEmpty(myInstance.Path))
@@ -25,6 +24,7 @@ public sealed class Compressor
         this.NewPath = string.IsNullOrWhiteSpace(myInstance.NewPath) ? myInstance.Path : myInstance.NewPath;
         this.ResizeImage();
     }
+    
     private bool ResizeImage()
     {
         try
@@ -48,7 +48,8 @@ public sealed class Compressor
             return false;
         }
     }
-    private void CompressImage(string path)
+    
+    private static void CompressImage(string path)
     {
         var image = new FileInfo(path);
         var optimizer = new ImageOptimizer();
@@ -62,6 +63,8 @@ public sealed class Compressor
     public string ImageName { get; set; } = string.Empty;
     public int Width { get; set; } = 0;
     public int Height { get; set; } = 0;
+    
+    private byte quality;
     public byte Quality
     {
         get => quality; set
