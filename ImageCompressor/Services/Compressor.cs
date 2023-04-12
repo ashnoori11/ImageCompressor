@@ -3,7 +3,7 @@
 public sealed class Compressor : IDisposable
 {
     #region methods
-    public void ProccessImage(Action<Compressor> options)
+    public void ProcessImage(Action<Compressor> options)
     {
         ArgumentNullException.ThrowIfNull(options, $"{nameof(options)} can not be null or empty");
 
