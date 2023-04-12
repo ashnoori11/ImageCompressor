@@ -2,10 +2,11 @@
 
 public sealed class Compressor
 {
+    private byte quality;
     #region methods
     public void ProcessImage(Action<Compressor> options)
     {
-        ArgumentNullException.ThrowIfNull(options, $"{nameof(options)} can not be null or empty");
+        ArgumentNullException.ThrowIfNull(options, nameof(options));
 
         Compressor myInstance = new Compressor();
         options(myInstance);
@@ -15,9 +16,6 @@ public sealed class Compressor
 
         if (string.IsNullOrEmpty(myInstance.ImageName))
             throw new ArgumentNullException(nameof(myInstance.ImageName));
-
-        if (myInstance.Quality == 0 || myInstance.Quality > 100)
-            throw new ArgumentOutOfRangeException("invalid value for quality - quality must be between 1 and 100");
 
         this.Path = myInstance.Path;
         this.ImageName = myInstance.ImageName;
@@ -29,9 +27,6 @@ public sealed class Compressor
     }
     private bool ResizeImage()
     {
-        if (this.Quality == 0 || this.Quality > 100)
-            throw new ArgumentOutOfRangeException("invalid quality");
-
         try
         {
             string newPath = string.IsNullOrWhiteSpace(this.NewPath) ? this.NewPath : this.NewPath;
@@ -67,7 +62,17 @@ public sealed class Compressor
     public string ImageName { get; set; } = string.Empty;
     public int Width { get; set; } = 0;
     public int Height { get; set; } = 0;
-    public int Quality { get; set; }
+    public byte Quality
+    {
+        get => quality; set
+        {
+            if (value is 0 or > 100)
+            {
+                throw new ArgumentOutOfRangeException(nameof(Quality));
+            }
+            quality = value;
+        }
+    }
     public string NewPath { get; set; } = string.Empty;
     #endregion
 }
