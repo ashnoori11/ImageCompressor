@@ -11,10 +11,10 @@ public sealed class Compressor
         options(myInstance);
 
         if (string.IsNullOrEmpty(myInstance.Path))
-            throw new ArgumentNullException("path can not be null or empty");
+            throw new ArgumentNullException(nameof(myInstance.Path));
 
         if (string.IsNullOrEmpty(myInstance.ImageName))
-            throw new ArgumentNullException("imageName can not be null or empty");
+            throw new ArgumentNullException(nameof(myInstance.ImageName));
 
         if (myInstance.Quality == 0 || myInstance.Quality > 100)
             throw new ArgumentOutOfRangeException("invalid value for quality - quality must be between 1 and 100");
