@@ -1,23 +1,20 @@
 ﻿namespace ImageCompressor.Services;
 
-public sealed class Compresser : IDisposable
+public sealed class Compressor
 {
     #region methods
-    public void ProccessImage(Action<Compresser> options)
+    public void ProcessImage(Action<Compressor> options)
     {
-        ArgumentNullException.ThrowIfNull(options, $"{nameof(options)} can not be null or empty");
+        ArgumentNullException.ThrowIfNull(options, nameof(options));
 
-        Compresser myInstance = new Compresser();
+        Compressor myInstance = new();
         options(myInstance);
 
         if (string.IsNullOrEmpty(myInstance.Path))
-            throw new ArgumentNullException("path can not be null or empty");
+            throw new ArgumentNullException(nameof(myInstance.Path));
 
         if (string.IsNullOrEmpty(myInstance.ImageName))
-            throw new ArgumentNullException("imageName can not be null or empty");
-
-        if (myInstance.Quality == 0 || myInstance.Quality > 100)
-            throw new ArgumentOutOfRangeException("invalid value for quality - quality must be between 1 and 100");
+            throw new ArgumentNullException(nameof(myInstance.ImageName));
 
         this.Path = myInstance.Path;
         this.ImageName = myInstance.ImageName;
@@ -27,11 +24,9 @@ public sealed class Compresser : IDisposable
         this.NewPath = string.IsNullOrWhiteSpace(myInstance.NewPath) ? myInstance.Path : myInstance.NewPath;
         this.ResizeImage();
     }
+    
     private bool ResizeImage()
     {
-        if (this.Quality == 0 || this.Quality > 100)
-            throw new ArgumentOutOfRangeException("invalid quality");
-
         try
         {
             string newPath = string.IsNullOrWhiteSpace(this.NewPath) ? this.NewPath : this.NewPath;
@@ -53,7 +48,8 @@ public sealed class Compresser : IDisposable
             return false;
         }
     }
-    private void CompressImage(string path)
+    
+    private static void CompressImage(string path)
     {
         var image = new FileInfo(path);
         var optimizer = new ImageOptimizer();
@@ -67,28 +63,19 @@ public sealed class Compresser : IDisposable
     public string ImageName { get; set; } = string.Empty;
     public int Width { get; set; } = 0;
     public int Height { get; set; } = 0;
-    public int Quality { get; set; }
-    public string NewPath { get; set; } = string.Empty;
-    #endregion
-
-    #region dispose
-    private bool disposedValue;
-    private void Dispose(bool disposing)
+    
+    private byte quality;
+    public byte Quality
     {
-        if (!disposedValue)
+        get => quality; set
         {
-            if (disposing)
+            if (value is 0 or > 100)
             {
+                throw new ArgumentOutOfRangeException(nameof(Quality));
             }
-
-            this.disposedValue = true;
+            quality = value;
         }
     }
-
-    public void Dispose()
-    {
-        Dispose(disposing: true);
-        GC.SuppressFinalize(this);
-    }
+    public string NewPath { get; set; } = string.Empty;
     #endregion
 }
